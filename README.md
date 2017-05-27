@@ -1,6 +1,6 @@
 # README #
 
-### VAFR => A Vagrant-Ansible-Flask-React Portal Starter Template  ###
+### VAFR : Vagrant-Ansible-Flask-React Portal Starter ###
 
 This project is aimed at creating a Web portal starter template within the Vagrant-Ansible 
 development environment. I made it to save me time when starting new projects.
