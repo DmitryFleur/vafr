@@ -1,0 +1,186 @@
+
+---
+- hosts: vafr
+  become: true
+  gather_facts: no
+
+  handlers:
+
+    - name: restart postgresql
+      action: service name=postgresql state=restarted
+
+    - name: restart nginx
+      action: service name=nginx state=restarted
+
+  vars:
+    dbname: vafr
+    dbuser: vafr
+    dbpassword: vafr
+    dbaddress: localhost
+
+    latestTagName: none
+
+  tasks:
+
+  - name: ensure Vagrant is a sudoer
+    copy: content="vagrant ALL=(ALL) NOPASSWD:ALL" dest=/etc/sudoers.d/vagrant owner=root group=root
+    when: is_vagrant == "True"
+    become: true
+
+  - name: update apt repo
+    action: apt update-cache=yes cache_valid_time=86400
+
+  - name: ensure apache is not installed
+    action: apt name=apache2 state=absent
+
+  - name: ensure apt cache is up to date
+    apt: update_cache=yes cache_valid_time=86400
+
+  - name: Add postgres repository
+    apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main' state=present
+
+  - name: Add postgres repository key
+    apt_key: url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc state=present
+
+  - name: Install postgresql
+    apt: pkg=postgresql-9.6 state=present force=yes
+
+  - name: Install postgresql contrib
+    apt: pkg=postgresql-contrib-9.6 state=present force=yes
+
+  - name: Install libpq-dev
+    apt: pkg=libpq-dev state=present force=yes
+
+  - name: Install packages
+    action: apt name={{item}}
+    with_items:
+        - python-dev
+        - python-psycopg2
+        - python3-dev
+        - python3-psycopg2
+        - python3-pip
+        - virtualenv
+        - npm
+        - python3-alembic
+
+  - name: install webpack
+    action: npm name=webpack global=yes state=present
+    when: is_vagrant == "True"
+    become: true
+
+  - name: Create a necessary sym link for webpack to work
+    shell: "if [ ! -e /usr/bin/node ]; then ln -s /usr/bin/nodejs /usr/bin/node; fi"
+    when: is_vagrant == "True"
+    become: true
+
+  - name: install npm packages in web_root (using package.json file)
+    shell: "cd /vagrant/web_root;npm install;"
+    when: is_vagrant == "True"
+
+  - name: Run webpack the first time to have a working web page
+    shell: "if [ ! -e /vagrant/web_root/dest/bundle.js ]; then cd /vagrant/web_root; webpack; fi"
+    when: is_vagrant == "True"
+
+
+  - name: Ensure postgres will listen on all interfaces
+    lineinfile: dest=/etc/postgresql/9.6/main/postgresql.conf
+      regexp='^#?listen_addresses\s*='
+      line="listen_addresses = '0.0.0.0'"
+      state=present
+    notify: restart postgresql
+
+  - name: Ensure postgres will trust local unix connections
+    lineinfile: dest=/etc/postgresql/9.6/main/pg_hba.conf
+      regexp='local\s+all\s+all'
+      line='local all all trust'
+      insertafter=EOF
+      backrefs=yes
+    notify: restart postgresql
+
+  - name: Ensure postgres will trust local TCP/IP connections
+    lineinfile: dest=/etc/postgresql/9.6/main/pg_hba.conf
+      regexp='host\s+all\s+all\s+127.0.0.1/32'
+      line='host all all 127.0.0.1/32 trust'
+      insertafter=EOF
+      backrefs=yes
+    notify: restart postgresql
+
+  - name: Ensure postgres allows all connections (DEV hosts)
+    lineinfile: dest=/etc/postgresql/9.6/main/pg_hba.conf
+      regexp='host\s+all\s+all\s+0.0.0.0/0\s+md5'
+      line='host all all 0.0.0.0/0 md5'
+      insertafter=EOF
+    notify: restart postgresql
+
+  - name: ensure database is created
+    postgresql_db: name={{dbname}}
+    become: true
+    become_user: postgres
+    vars:
+      ansible_ssh_pipelining: true
+
+  - name: ensure user has access to database
+    postgresql_user: db={{dbname}} name={{dbuser}} password={{dbpassword}} priv=ALL
+    no_log: True
+    become: true
+    become_user: postgres
+    vars:
+      ansible_ssh_pipelining: true
+
+  - name: ensure user does not have unnecessary privilege
+    postgresql_user: name={{dbuser}} role_attr_flags=NOSUPERUSER,NOCREATEDB
+    become: true
+    become_user: postgres
+    vars:
+      ansible_ssh_pipelining: true
+
+  - name: Enable postgres unaccent extension
+    shell: psql -v ON_ERROR_STOP=1 --dbname={{dbname}} -c "CREATE EXTENSION IF NOT EXISTS unaccent;"
+    become: true
+    become_user: postgres
+    vars:
+      ansible_ssh_pipelining: true
+
+  - name: Enable postgres pg_trgm extension
+    shell: psql -v ON_ERROR_STOP=1 --dbname={{dbname}} -c "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
+    become: true
+    become_user: postgres
+    vars:
+      ansible_ssh_pipelining: true
+
+#  ===============================  NGINX  ===============================
+
+  - name: add nginx ppa
+    action: apt_repository repo=ppa:nginx/stable update_cache=no state=present
+
+  - name: install nginx
+    action: apt name=nginx state=installed
+
+  - name: remove nginx default site 1
+    action: file path=/etc/nginx/sites-enabled/default state=absent
+
+  - name: remove nginx default site 2
+    action: file path=/etc/nginx/sites-available/default state=absent
+
+  - name: service nginx
+    action: service name=nginx state=started
+
+  - name: Proxy nginx
+    template: src=templates/nginx.conf dest=/etc/nginx/sites-enabled/vafr.conf
+    notify: restart nginx
+
+# ============================= Python Env and App setup ===================
+
+  - name: Create virtualenv
+    shell: "if [ ! -e {{flaskHome}}/venv ]; then virtualenv -p python3 {{flaskHome}}/venv; fi"
+
+  - name: Install python libs
+    pip: virtualenv={{flaskHome}}/venv
+         requirements={{flaskHome}}/requirements.txt
+
+  - name: Resolve Flask settings
+    template: src=templates/settings.py dest={{flaskHome}}/apiserver/settings.py
+    no_log: True
+    notify: restart nginx
+
+

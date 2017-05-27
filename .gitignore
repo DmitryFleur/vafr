@@ -1,0 +1,11 @@
+*.pyc
+*.pyo
+*.retry
+ansible/host-vagrant-vafr
+__pycache__/
+dest/
+node_modules/
+.idea/
+.vagrant/
+flask_api/venv/
+flask_api/apiserver/settings.py
