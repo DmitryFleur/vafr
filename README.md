@@ -28,9 +28,9 @@ development environment. I made it to save me time when starting new projects.
 - The client
     - React         15.5.4
     - Flux          3.1.2
-    - Babel         6.23.0
     - Material-UI   0.18.1
-    - Webpack       2.3.3
+    - Babel         6.23.0     (for dev)
+    - Webpack       2.3.3      (for dev)
         - For up-to-date NPM packages list see "web_root/package.json"
 
 
