@@ -99,9 +99,8 @@ There are two users in the database initially so you can try the login page upfr
 codes here and there.
      
 
-- And thanks to the "react-stonecutter" project (https://github.com/dantrain/react-stonecutter)
-project for the dynamic Grid Layout. I use a stripped-down version of their code for the 
-Grid layout view example.
+- And thanks to Dan Train for the "react-stonecutter" project (https://github.com/dantrain/react-stonecutter)
+for the dynamic Grid Layout.
 
 ### License ###
 MIT
