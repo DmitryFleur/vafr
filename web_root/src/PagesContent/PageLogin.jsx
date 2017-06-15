@@ -65,26 +65,7 @@ class PageLogin extends React.Component {
 
         event.preventDefault();
 
-        $.ajax({
-          url: '1/api/login',
-          type: 'POST',
-          data: $('form').serialize(),
-          success: function(serverResponse) {
-             this.setState({Message: serverResponse["body"]["login_message"]});
-             if(serverResponse["body"]["login_success"]){
-                userActions.setCurrentUser(serverResponse["body"]["user"]);
-             }
-             else{
-                userActions.setCurrentUser(null);
-             }
-             //Redirect to home path
-             window.location.href="/";
-          }.bind(this),
-          error: function(xhr, status, err) {
-            console.error(this.props.url, status, err.toString());
-            this.setState({actionloginfo:"Error"});
-          }.bind(this)
-        });
+        userActions.loginUser( $('form') );
 
     }
 

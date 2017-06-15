@@ -11,6 +11,7 @@ class UserStore extends EventEmitter {
 
         super()
 
+        this.loginUser = this.loginUser.bind(this);
         this.setCurrentUser = this.setCurrentUser.bind(this);
         this.logoutCurrentUser = this.logoutCurrentUser.bind(this);
 
@@ -44,6 +45,32 @@ class UserStore extends EventEmitter {
 
     }
 
+    
+    loginUser(loginformdata){
+
+        $.ajax({
+          url: '1/api/login',
+          type: 'POST',
+          data: loginformdata.serialize(),
+          success: function(serverResponse) {
+             if(serverResponse["body"]["login_success"]){
+                this.setCurrentUser(serverResponse["body"]["user"]);
+             }
+             else{
+                this.setCurrentUser(null);
+             }
+
+             //Redirect to home path
+             window.location.href="/";
+
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error(this.props.url, status, err.toString());
+          }.bind(this)
+        });
+
+    }
+
     setCurrentUser(user){
         this.currentUser= user;
         this.emit("change");
@@ -69,10 +96,15 @@ class UserStore extends EventEmitter {
         });
     }
 
-
+    ////////////////////////////////////////////////////////////////
+    // Filter and handle the actions this Store is responsible for
 
     handleActions(action) {
         switch(action.type) {
+            case "LOGIN_USER": {
+                this.loginUser(action.loginformdata);
+                break;
+            }
             case "SET_CURRENT_USER": {
                 this.setCurrentUser(action.userInfos);
                 break;

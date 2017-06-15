@@ -1,6 +1,12 @@
 import dispatcher from "../dispatcher";
 
 
+export function loginUser(loginformdata) {
+  dispatcher.dispatch({
+    type: "LOGIN_USER",
+    loginformdata,
+  });
+}
 
 export function setCurrentUser(userInfos) {
   dispatcher.dispatch({
