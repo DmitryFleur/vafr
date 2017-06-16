@@ -9,8 +9,43 @@ class CC2 extends React.Component {
   render () {
 
     return (
-      <div style={style.CellBase} >
+      <div style={Object.assign({}, style.CellBase,style.CC2)} >
         <p>
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
+          I am content of Cell 2
           I am content of Cell 2
           I am content of Cell 2
           I am content of Cell 2

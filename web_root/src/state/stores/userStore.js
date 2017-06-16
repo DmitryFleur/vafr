@@ -45,7 +45,7 @@ class UserStore extends EventEmitter {
 
     }
 
-    
+
     loginUser(loginformdata){
 
         $.ajax({

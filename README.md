@@ -3,15 +3,17 @@
 ### VAFR : Vagrant-Ansible-Flask-React Portal Starter ###
 
 This project is aimed at creating a Web portal starter template within the Vagrant-Ansible 
-development environment. I made it to save me time when starting new projects.
-... Hope it is usefull to others!
+development environment. It uses Python, Flask and Postgresql on the server side and React, 
+Flux and Material-UI on the client side.
+
+I made it to save me time when starting new projects... Hope it is usefull to others!
 
 ### The stack ###
 
 - Development environment
-    - Vagrant         1.9.3
+    - Vagrant         1.9.5
     - Virtualbox      5.0.32
-    - Ansible         2.2.1.0
+    - Ansible         2.3.1.0
     - PyCharm         2017.1
 
 

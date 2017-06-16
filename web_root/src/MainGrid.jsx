@@ -2,7 +2,9 @@
 import React from 'react'
 
 import Grid from '../lib/stonecutter/Grid';
-import { easings } from '../lib/stonecutter/index';
+
+// Styles
+import * as styles from './style/styleCells.jsx'
 
 // Data Stores
 import userStore from './state/stores/userStore.js'
@@ -27,18 +29,7 @@ class MainGrid extends React.Component {
         this.setCurrentUser = this.setCurrentUser.bind(this);
         this.setAdminMode = this.setAdminMode.bind(this);
 
-        var gridP = {
-          responsive: true,
-          layout: 'pinterest',
-          enterExitStyle: 'simple',
-          duration: 120,
-          stiffness: 100,
-          damping: 18,
-          columns: 5,
-          gutters: 10,
-          columnWidth:265,
-          easing: easings.cubicOut
-        };
+        var gridP = styles.stoneCutterGridProps;
 
         // Get initial user info from the store
         this.state= {
@@ -91,17 +82,17 @@ class MainGrid extends React.Component {
             <div>
                 <Grid measured={true} {...gridProps} >
 
-                  <li><CC1></CC1></li>
+                  <li style={styles.CellContainer} ><CC1></CC1></li>
 
-                  <li><CC2></CC2></li>
+                  <li style={styles.CellContainer} ><CC2></CC2></li>
 
-                  {this.state.adminMode ? (<li><CC1admin></CC1admin></li>) : (<li><CC3></CC3></li>) }
+                  {this.state.adminMode ? (<li style={styles.CellContainer} ><CC1admin></CC1admin></li>) : (<li style={styles.CellContainer} ><CC3></CC3></li>) }
 
-                  {this.state.adminMode ? (<li><CC2admin></CC2admin></li>) : (<li><CC4></CC4></li>) }
+                  {this.state.adminMode ? (<li style={styles.CellContainer} ><CC2admin></CC2admin></li>) : (<li style={styles.CellContainer} ><CC4></CC4></li>) }
 
-                  {this.state.adminMode ? (<li><CC1admin></CC1admin></li>) : (null) }
+                  {this.state.adminMode ? (<li style={styles.CellContainer} ><CC3admin></CC3admin></li>) : (null) }
 
-                  <li><CC5></CC5></li>
+                  <li style={styles.CellContainer} ><CC5></CC5></li>
 
 
                 </Grid>
