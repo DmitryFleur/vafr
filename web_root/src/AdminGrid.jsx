@@ -10,17 +10,12 @@ import * as styles from './style/styleCells.jsx'
 import userStore from './state/stores/userStore.js'
 import adminStore from './state/stores/adminStore.js'
 
-import CC1 from './CellsContent/CC1.jsx'
-import CC2 from './CellsContent/CC2.jsx'
-import CC3 from './CellsContent/CC3.jsx'
-import CC4 from './CellsContent/CC4.jsx'
-import CC5 from './CellsContent/CC5.jsx'
 import CC1admin from './CellsContent/CC1admin.jsx'
 import CC2admin from './CellsContent/CC2admin.jsx'
 import CC3admin from './CellsContent/CC3admin.jsx'
 
 
-class MainGrid extends React.Component {
+class AdminGrid extends React.Component {
 
     constructor(props) {
 
@@ -63,7 +58,6 @@ class MainGrid extends React.Component {
     }
 
 
-
     render () {
 
         const { ...gridProps } = this.state.gridP;
@@ -73,16 +67,11 @@ class MainGrid extends React.Component {
             <div>
                 <Grid measured={true} {...gridProps} >
 
-                  <li style={styles.CellContainer} ><CC1></CC1></li>
+                  <li style={styles.CellContainer} ><CC1admin></CC1admin></li>
 
-                  <li style={styles.CellContainer} ><CC2></CC2></li>
+                  <li style={styles.CellContainer} ><CC2admin></CC2admin></li>
 
-                  <li style={styles.CellContainer} ><CC3></CC3></li>
-
-                  <li style={styles.CellContainer} ><CC4></CC4></li>
-
-                  <li style={styles.CellContainer} ><CC5></CC5></li>
-
+                  <li style={styles.CellContainer} ><CC3admin></CC3admin></li>
 
                 </Grid>
             </div>
@@ -92,5 +81,5 @@ class MainGrid extends React.Component {
 
 }
 
-export default MainGrid
+export default AdminGrid
 

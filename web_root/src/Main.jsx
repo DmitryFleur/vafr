@@ -8,9 +8,11 @@ import {
 
 // Data Stores
 import userStore from './state/stores/userStore.js'
+import adminStore from './state/stores/adminStore.js'
 
 // Components
 import MainGrid from './MainGrid.jsx'
+import AdminGrid from './AdminGrid.jsx'
 
 import Page1 from './PagesContent/Page1.jsx'
 import PageWelcome from './PagesContent/PageWelcome.jsx'
@@ -25,10 +27,12 @@ class Main extends React.Component {
         super(props);
 
         this.setCurrentUser = this.setCurrentUser.bind(this);
+        this.setAdminMode = this.setAdminMode.bind(this);
 
         // Get initial user info from the store
         this.state= {
-            user: userStore.getCurrentUser()
+            user: userStore.getCurrentUser(),
+            adminMode: adminStore.getAdminMode()
         }
 
     }
@@ -38,6 +42,7 @@ class Main extends React.Component {
     // for listeners to the stores
     componentDidMount() {
         userStore.on("change", this.setCurrentUser);
+        adminStore.on("changeAdminMode", this.setAdminMode);
     }
 
     /////////////////////////////////////////////////////////////////
@@ -46,6 +51,7 @@ class Main extends React.Component {
     // and other actions mishandlings.
     componentWillUnmount() {
         userStore.removeListener("change", this.setCurrentUser);
+        adminStore.removeListener("changeAdminMode", this.setAdminMode);
     }
 
     /////////////////////////////////////////////////////////////////
@@ -57,6 +63,12 @@ class Main extends React.Component {
         })
     }
 
+    setAdminMode(){
+        this.setState({
+            adminMode: adminStore.getAdminMode()
+        })
+    }
+
     /////////////////////////////////////////////////////////////////
     // Render component
 
@@ -64,7 +76,7 @@ class Main extends React.Component {
         return (
             <Router>
                 <div>
-                    <Route exact path="/" component={this.state.user ? MainGrid : PageWelcome} />
+                    <Route exact path="/" component={this.state.user ? (this.state.adminMode ? AdminGrid : MainGrid ) : PageWelcome } />
                     <Route path="/login" component={PageLogin} />
                     <Route path="/contentPage1" component={Page1} />
                     <Route path="/welcome" component={PageWelcome} />

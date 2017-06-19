@@ -15,7 +15,7 @@ I made it to save me time when starting new projects... Hope it is usefull to ot
     - Virtualbox      5.0.32
     - Ansible         2.3.1.0
     - PyCharm         2017.1
-
+ 
 
 - The API server
     - NGINX         
