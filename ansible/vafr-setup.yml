@@ -64,7 +64,7 @@
         - python3-alembic
 
   - name: install webpack
-    action: npm name=webpack global=yes state=present
+    action: npm name=webpack version=2.6.1 global=yes state=present
     when: is_vagrant == "True"
     become: true
 

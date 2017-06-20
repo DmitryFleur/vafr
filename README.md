@@ -32,7 +32,7 @@ I made it to save me time when starting new projects... Hope it is usefull to ot
     - Flux          3.1.2
     - Material-UI   0.18.1
     - Babel         6.23.0     (for dev)
-    - Webpack       2.3.3      (for dev)
+    - Webpack       2.6.1      (for dev)
         - For up-to-date NPM packages list see "web_root/package.json"
 
 
