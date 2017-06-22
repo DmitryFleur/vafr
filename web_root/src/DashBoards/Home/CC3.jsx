@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Paper from 'material-ui/Paper';
+import { Link } from 'react-router-dom'
 
 import * as style from '../../style/styleBoards.jsx'
 
@@ -19,7 +20,7 @@ class CC3 extends React.Component {
         </h2>
 
           <br/>
-          <a href="/contentPage1">Link to page 1</a>
+          <Link to="/contentPage1">Link to page 1</Link>
 
       </Paper>
     )

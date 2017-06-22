@@ -5,6 +5,7 @@
 // Modules
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {BrowserRouter as Router} from 'react-router-dom'
 
 // Styling
 import * as style from './style/styleApp.jsx'
@@ -85,21 +86,26 @@ class App extends React.Component {
 
             <MuiThemeProvider muiTheme={ getMuiTheme(muiTheme) }>
 
-                <div style={style.App}>
+                <Router>
 
-                    <div style={style.HeaderContainer}>
-                        <Header />
+                    <div style={style.App}>
+
+                        <div style={style.HeaderContainer}>
+                            <Header />
+                        </div>
+
+                        <div style={style.CentralContainer}>
+                              <Main />
+                        </div>
+
+                        <div style={style.FooterContainer}>
+                            <Footer />
+                        </div>
+
                     </div>
 
-                    <div style={style.CentralContainer}>
-                          <Main />
-                    </div>
+                </Router>
 
-                    <div style={style.FooterContainer}>
-                        <Footer />
-                    </div>
-
-                </div>
             </MuiThemeProvider>
 
         );

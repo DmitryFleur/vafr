@@ -1,6 +1,7 @@
 
 // Modules
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 // Material-UI imports
 import AppBar from 'material-ui/AppBar'
@@ -108,7 +109,7 @@ class Header extends React.Component {
 
                 <AppBar
                 iconElementLeft={
-                    <span><a href="/">Logo</a></span>
+                    <span> <Link to="/" >Logo</Link> </span>
                 }
                 title="Title"
                 iconElementRight={
@@ -121,10 +122,10 @@ class Header extends React.Component {
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                       >
 
-                        <MenuItem primaryText="Login" href="/login" />
+                        <MenuItem primaryText="Login" containerElement={<Link to="/login" />} />
                         <Divider />
                         <MenuItem primaryText="Help" />
-                        <MenuItem primaryText="Welcome Page" href="/welcome" />
+                        <MenuItem primaryText="Welcome Page" containerElement={<Link to="/welcome" />} />
                         <MenuItem primaryText="Sign out" onClick={this.logoutUser} />
 
                       </IconMenu>

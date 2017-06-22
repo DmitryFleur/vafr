@@ -1,10 +1,7 @@
 
 // Modules
 import React from 'react'
-import {
-  BrowserRouter as Router,
-  Route
-} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 // Data Stores
 import userStore from './state/stores/userStore.js'
@@ -74,14 +71,12 @@ class Main extends React.Component {
 
     render () {
         return (
-            <Router>
-                <div>
-                    <Route exact path="/" component={this.state.user ? (this.state.adminMode ? AdminHomeBoard : HomeBoard ) : PageWelcome } />
-                    <Route path="/login" component={PageLogin} />
-                    <Route path="/contentPage1" component={Page1} />
-                    <Route path="/welcome" component={PageWelcome} />
-                </div>
-            </Router>
+            <div>
+                <Route exact path="/" component={this.state.user ? (this.state.adminMode ? AdminHomeBoard : HomeBoard ) : PageWelcome } />
+                <Route path="/login" component={PageLogin} />
+                <Route path="/contentPage1" component={Page1} />
+                <Route path="/welcome" component={PageWelcome} />
+            </div>
         )
     }
 
