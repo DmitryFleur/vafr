@@ -34,7 +34,7 @@ export var CellBase = {
     fontWeight: 'bold',
     fontSize: '0.75em',
     textAlign: 'left',
-    backgroundColor: '#E0E0E0',
+    backgroundColor: '#B0E0f0',
     overflowX: 'hidden',
     borderRadius: '6px',
     border: '1px dashed silver'

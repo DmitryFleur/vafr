@@ -11,12 +11,12 @@ import userStore from './state/stores/userStore.js'
 import adminStore from './state/stores/adminStore.js'
 
 // Components
-import MainGrid from './MainGrid.jsx'
-import AdminGrid from './AdminGrid.jsx'
+import HomeBoard from './DashBoards/Home/HomeBoard.jsx'
+import AdminHomeBoard from './DashBoards/AdminHome/AdminHomeBoard.jsx'
 
-import Page1 from './PagesContent/Page1.jsx'
-import PageWelcome from './PagesContent/PageWelcome.jsx'
-import PageLogin from './PagesContent/PageLogin.jsx'
+import Page1 from './MainContents/Page1.jsx'
+import PageWelcome from './MainContents/PageWelcome.jsx'
+import PageLogin from './MainContents/PageLogin.jsx'
 
 
 
@@ -76,7 +76,7 @@ class Main extends React.Component {
         return (
             <Router>
                 <div>
-                    <Route exact path="/" component={this.state.user ? (this.state.adminMode ? AdminGrid : MainGrid ) : PageWelcome } />
+                    <Route exact path="/" component={this.state.user ? (this.state.adminMode ? AdminHomeBoard : HomeBoard ) : PageWelcome } />
                     <Route path="/login" component={PageLogin} />
                     <Route path="/contentPage1" component={Page1} />
                     <Route path="/welcome" component={PageWelcome} />
