@@ -1,8 +1,6 @@
 
 import React from 'react'
 
-import Grid from '../../../lib/stonecutter/Grid';
-
 import CC1admin from './CC1admin.jsx'
 import CC2admin from './CC2admin.jsx'
 import CC3admin from './CC3admin.jsx'
@@ -23,12 +21,9 @@ class AdminHomeBoard extends React.Component {
 
         this.setCurrentUser = this.setCurrentUser.bind(this);
 
-        var gridP = styles.stoneCutterGridProps;
-
         // Get initial user info from the store
         this.state= {
-            gridP: gridP,
-            user: userStore.getCurrentUser(),
+            user: userStore.getCurrentUser()
         }
 
     }
@@ -60,20 +55,14 @@ class AdminHomeBoard extends React.Component {
 
     render () {
 
-        const { ...gridProps } = this.state.gridP;
-
         return (
 
-            <div>
-                <Grid measured={true} {...gridProps} >
+            <div style={styles.BoardContainer}>
 
-                  <li style={styles.CellContainer} ><CC1admin></CC1admin></li>
+                <div style={styles.CellContainer} ><CC1admin></CC1admin></div>
+                <div style={styles.CellContainer} ><CC2admin></CC2admin></div>
+                <div style={styles.CellContainer} ><CC3admin></CC3admin></div>
 
-                  <li style={styles.CellContainer} ><CC2admin></CC2admin></li>
-
-                  <li style={styles.CellContainer} ><CC3admin></CC3admin></li>
-
-                </Grid>
             </div>
 
         )

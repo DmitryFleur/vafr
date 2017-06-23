@@ -1,8 +1,6 @@
 
 import React from 'react'
 
-import Grid from '../../../lib/stonecutter/Grid';
-
 
 import CC1 from './CC1.jsx'
 import CC2 from './CC2.jsx'
@@ -27,12 +25,9 @@ class HomeBoard extends React.Component {
 
         this.setCurrentUser = this.setCurrentUser.bind(this);
 
-        var gridP = styles.stoneCutterGridProps;
-
         // Get initial user info from the store
         this.state= {
-            gridP: gridP,
-            user: userStore.getCurrentUser(),
+            user: userStore.getCurrentUser()
         }
 
     }
@@ -65,25 +60,15 @@ class HomeBoard extends React.Component {
 
     render () {
 
-        const { ...gridProps } = this.state.gridP;
-
         return (
+            <div style={styles.BoardContainer}>
 
-            <div>
-                <Grid measured={true} {...gridProps} >
+                <div style={styles.CellContainer} ><CC1></CC1></div>
+                <div style={styles.CellContainer} ><CC2></CC2></div>
+                <div style={styles.CellContainer} ><CC3></CC3></div>
+                <div style={styles.CellContainer} ><CC4></CC4></div>
+                <div style={styles.CellContainer} ><CC5></CC5></div>
 
-                  <li style={styles.CellContainer} ><CC1></CC1></li>
-
-                  <li style={styles.CellContainer} ><CC2></CC2></li>
-
-                  <li style={styles.CellContainer} ><CC3></CC3></li>
-
-                  <li style={styles.CellContainer} ><CC4></CC4></li>
-
-                  <li style={styles.CellContainer} ><CC5></CC5></li>
-
-
-                </Grid>
             </div>
 
         )

@@ -1,20 +1,13 @@
 
-// Import style stuff from stone cutter
-import { easings } from '../../lib/stonecutter/index';
 
-
-export var stoneCutterGridProps = {
-    responsive: true,
-    layout: 'pinterest',
-    enterExitStyle: 'simple',
-    duration: 120,
-    stiffness: 100,
-    damping: 18,
-    columns: 5,
-    gutters: 0,
-    columnWidth:260,
-    easing: easings.cubicOut
-};
+export var BoardContainer = {
+    width:'100%',
+    display:'flex',
+    display:'-webkit-flex',
+    WebkitFlexWrap:'wrap',
+    flexWrap: 'wrap',
+    justifyContent:'center'
+}
 
 
 export var CellContainer = {
