@@ -2,6 +2,7 @@
 // Modules
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 // Material-UI imports
 import AppBar from 'material-ui/AppBar'
@@ -38,6 +39,8 @@ class Header extends React.Component {
             user: userStore.getCurrentUser(),
             adminMode: adminStore.getAdminMode()
         }
+
+        this.adminModeChangedRedirect=false;
 
     }
 
@@ -78,6 +81,7 @@ class Header extends React.Component {
     }
 
     toggleAdminMode(){
+        this.adminModeChangedRedirect=true;
         adminActions.setAdminMode(!this.state.adminMode);
     }
 
@@ -85,6 +89,12 @@ class Header extends React.Component {
     // Render component
 
     render () {
+
+        // If admin mode have changed redirect to home
+        if(this.adminModeChangedRedirect){
+            this.adminModeChangedRedirect=false;
+            return <Redirect to='/' />
+        }
 
         var AdminToggleWidget = (
             <Toggle style={style.AdminToggle}
